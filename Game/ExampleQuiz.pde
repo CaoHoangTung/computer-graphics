@@ -12,20 +12,25 @@ String QUESTION_ANSWERS[] = {
 String QUESTION_IMAGES[] = {
   "img/tungch/7a.png",
   "img/tungch/7b.png",
-    "img/tungch/8.png"
+  "img/tungch/8.png"
 };
 int QUESTION_IMAGES_WIDTH[] = {200, 200, 200};
 int QUESTION_IMAGES_HEIGHT[] = {200, 200, 200};
 
 PImage bg;
 PFont f;
+
+
   
+void settings() {
+  size(1024, 512);
+}
 QuizGame game;
 void setup() {
   game = new QuizGame(NUM_QUESTIONS, QUESTION_TEXTS, QUESTION_IMAGES, QUESTION_IMAGES_WIDTH, QUESTION_IMAGES_HEIGHT, QUESTION_ANSWERS);
-  size(1024, 512);
+
   
-  bg = loadImage("./img/bg1.jpg");
+  bg = loadImageRelative("./img/bg1.jpg");
   f = createFont("Georgia", 26, true);
 }
 
