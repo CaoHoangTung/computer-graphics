@@ -60,7 +60,7 @@ public class QuizGame {
   
   void drawQuestionTextBox() {
     // create question box
-    fill(BOX_BACKGROUND_COLOR, BOX_OPACITY);
+    fill(BOX_BACKGROUND_COLOR, sau daBOX_OPACITY);
     rect(PADDING, PADDING, QUESTION_BOX_WIDTH, QUESTION_BOX_HEIGHT, BOX_RADIUS);
     String str = QUESTION_TEXTS[ACTIVE_QUESTION-1];
     fill(BOX_TEXT_COLOR);
