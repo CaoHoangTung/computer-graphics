@@ -17,11 +17,13 @@ public class QuizGame {
   int[] QUESTION_IMAGES_HEIGHT;
   
   String[] QUESTION_ACTUAL_ANSWERS;
+  String[][][] QUESTION_DATA;
   ArrayList<String> QUESTION_INPUT_ANSWERS;
   int finalScore;
     
   QuizGame(int numQuestions, String[] questionTexts, String[] questionImages, 
-            int[] questionImagesWidth, int[] questionImagesHeight, String[] questionAnswers) {
+            int[] questionImagesWidth, int[] questionImagesHeight, 
+            String[] questionAnswers, String[][][] questionData) {
     NUM_QUESTIONS = numQuestions;
     QUESTION_TEXTS = questionTexts;
     QUESTION_IMAGES = questionImages;
@@ -31,6 +33,7 @@ public class QuizGame {
     QUESTION_BOX_WIDTH = width - PADDING*2;
     QUESTION_ACTUAL_ANSWERS = questionAnswers;
     QUESTION_INPUT_ANSWERS = new ArrayList();
+    QUESTION_DATA = questionData;
     finalScore = 0;
   }
   
@@ -41,7 +44,6 @@ public class QuizGame {
     background(bg);
     textFont(f, 16);
     fill(0);
-
     
     if (ACTIVE_QUESTION == 0) {
       // draw begin game screen
@@ -54,13 +56,15 @@ public class QuizGame {
   
       drawQuestionImage();
       
+      drawQuestionData();
+      
       drawUserInput();
     }
   }
   
   void drawQuestionTextBox() {
     // create question box
-    fill(BOX_BACKGROUND_COLOR, sau daBOX_OPACITY);
+    fill(BOX_BACKGROUND_COLOR, BOX_OPACITY);
     rect(PADDING, PADDING, QUESTION_BOX_WIDTH, QUESTION_BOX_HEIGHT, BOX_RADIUS);
     String str = QUESTION_TEXTS[ACTIVE_QUESTION-1];
     fill(BOX_TEXT_COLOR);
@@ -78,6 +82,10 @@ public class QuizGame {
   
     fill(BOX_BACKGROUND_COLOR, BOX_OPACITY);
     rect(PADDING, PADDING*2 + QUESTION_BOX_HEIGHT, IMAGE_BOX_WIDTH, IMAGE_BOX_HEIGHT, BOX_RADIUS);
+    
+    if (QUESTION_IMAGES.length < ACTIVE_QUESTION) {
+      return;
+    }
     PImage img = loadImageRelative(QUESTION_IMAGES[ACTIVE_QUESTION-1]);
   
     int IMAGE_X = (width-IMAGE_WIDTH)/2;
@@ -85,6 +93,16 @@ public class QuizGame {
     image(img, IMAGE_X, IMAGE_Y, IMAGE_WIDTH, IMAGE_HEIGHT);
   }
   
+  void drawQuestionData() {
+    // question type in page 137
+    if (QUESTION_DATA.length < ACTIVE_QUESTION) {
+      return;
+    }
+    String[][] data = QUESTION_DATA[ACTIVE_QUESTION-1];
+    for (int i = 0; i < 3; i++) {
+      graph.drawStarGraph(data[i], 180 + i * 300, 270, 30);
+    }
+  }
   
   void drawUserInput() {
     String userInput = QUESTION_INPUT_ANSWERS.get(ACTIVE_QUESTION-1);
