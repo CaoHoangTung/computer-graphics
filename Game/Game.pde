@@ -86,11 +86,18 @@ public class QuizGame {
     if (QUESTION_IMAGES.length < ACTIVE_QUESTION) {
       return;
     }
-    PImage img = loadImageRelative(QUESTION_IMAGES[ACTIVE_QUESTION-1]);
-  
-    int IMAGE_X = (width-IMAGE_WIDTH)/2;
-    int IMAGE_Y = PADDING*3 + QUESTION_BOX_HEIGHT;
-    image(img, IMAGE_X, IMAGE_Y, IMAGE_WIDTH, IMAGE_HEIGHT);
+    
+    ImageQuestion q = new ImageQuestion(
+      QUESTION_TEXTS[ACTIVE_QUESTION-1], 
+      QUESTION_ACTUAL_ANSWERS[ACTIVE_QUESTION-1],
+      QUESTION_IMAGES[ACTIVE_QUESTION-1],
+      PADDING,
+      IMAGE_HEIGHT, 
+      IMAGE_WIDTH,
+      QUESTION_BOX_HEIGHT,
+      QUESTION_BOX_WIDTH
+    );
+    q.drawQuestion(0, 0);
   }
   
   void drawQuestionData() {
@@ -98,10 +105,12 @@ public class QuizGame {
     if (QUESTION_DATA.length < ACTIVE_QUESTION) {
       return;
     }
-    String[][] data = QUESTION_DATA[ACTIVE_QUESTION-1];
-    for (int i = 0; i < 3; i++) {
-      graph.drawStarGraph(data[i], 180 + i * 300, 270, 30);
-    }
+    StarGraphQuestion q = new StarGraphQuestion(
+      QUESTION_TEXTS[ACTIVE_QUESTION-1], 
+      QUESTION_ACTUAL_ANSWERS[ACTIVE_QUESTION-1],
+      QUESTION_DATA[ACTIVE_QUESTION-1]
+    );
+    q.drawQuestion(256, 270);
   }
   
   void drawUserInput() {
