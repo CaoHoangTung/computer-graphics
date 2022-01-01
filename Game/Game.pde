@@ -98,6 +98,7 @@ public class QuizGame {
     if (QUESTION_DATA.length < ACTIVE_QUESTION) {
       return;
     }
+    
     String[][] data = QUESTION_DATA[ACTIVE_QUESTION-1];
     for (int i = 0; i < 3; i++) {
       graph.drawStarGraph(data[i], 180 + i * 300, 270, 30);
