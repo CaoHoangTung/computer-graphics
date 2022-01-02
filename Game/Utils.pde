@@ -17,9 +17,10 @@ public class DrawUtil {
   * @param txtSize      size of each character  
   * @param arr          list of charaters   
   */
-  void drawSequence(int numBlocks, int blockWidth, int blockHeight, int x, int y, int blockDist, int txtSize, char[] arr) {
+  void drawSequence(int numBlocks, float blockWidth, float blockHeight, float x, float y, float blockDist, float txtSize, String[] arr) {
     float padX = (blockWidth - txtSize) / 2;
     float padY = (blockHeight - txtSize) / 2;
+  
     
     for (int i = 0; i < numBlocks; ++i) {
       fill(255, 255, 255);
@@ -31,7 +32,7 @@ public class DrawUtil {
       textAlign(CENTER);
       text(String.valueOf(arr[i]), x, y + txtSize, blockWidth, blockHeight);
     
-      x += blockWidth + 1 + blockDist;
+      x += blockWidth + blockDist;
     }
   }
   
@@ -49,15 +50,24 @@ public class DrawUtil {
   * @param distX        distance between 2 consecutive block in a row  
   * @param distY        distance between 2 consecutive block in a col  
   * @param txtSize      size of each character  
-  * @param table          list of charaters   
+  * @param arr          list of charaters   
   */
-  void drawTable(int numRows, int numCols, int blockWidth, int blockHeight, int x, int y, int distX, int distY, int txtSize, char[][] table) {
+  void drawTable(int numRows, int numCols, float blockWidth, float blockHeight, float x, float y, float distX, float distY, float txtSize, String[][] arr) {
+    /*
+      
+    */
     for (int i = 0; i < numRows; ++i) {
-      drawSequence(numCols, blockHeight, blockWidth, x, y, distX, txtSize, table[i]);
-      y += blockHeight + 1 + distY;
+      drawSequence(numCols, blockWidth, blockHeight, x, y, distX, txtSize, arr[i]);
+      y += blockHeight + distY;
     }
   }
-}
 
-void draw() {
+  void drawPyramid(float numRows, float blockWidth, float blockHeight, int distX, int distY, float x, float y, float txtSize, String[][] arr) {
+    // drawSequence(int numBlocks, int blockHeight, int blockWidth, int x, int y, int blockDist, int txtSize, char[] arr) 
+    for (int i = 0; i < numRows; ++i) {
+      drawSequence(i+1, blockWidth, blockHeight, x, y, distX, txtSize, arr[i]);
+      x -= blockWidth / 2;
+      y += blockHeight + distY;
+    }
+  }
 }
