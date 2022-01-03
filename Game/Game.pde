@@ -77,18 +77,6 @@ public class QuizGame {
       QUESTION_FIGURES[ACTIVE_QUESTION-1].draw();
   }
   
-  void drawQuestionData() {
-    // question type in page 137
-    if (QUESTION_DATA.length < ACTIVE_QUESTION) {
-      return;
-    }
-    
-    String[][] data = QUESTION_DATA[ACTIVE_QUESTION-1];
-    for (int i = 0; i < 3; i++) {
-      drawUtil.drawStarGraph(data[i], 180 + i * 300, 270, 30);
-    }
-  }
-  
   void drawUserInput() {
     String userInput = QUESTION_INPUT_ANSWERS.get(ACTIVE_QUESTION-1);
       
