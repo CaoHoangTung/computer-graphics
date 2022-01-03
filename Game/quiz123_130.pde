@@ -26,11 +26,6 @@ String[] QUESTION_TEXTS = {
    "How many dragonflies are there?"
 };
 
-String[][][] QUESTION_DATA = {};
-String QUESTION_IMAGES[] = {};
-int QUESTION_IMAGES_WIDTH[] = {200, 200, 200, 200, 200, 200, 200, 200};
-int QUESTION_IMAGES_HEIGHT[] = {200, 200, 200, 200, 200, 200, 200, 200};
-
 String QUESTION_ANSWERS[] = {
   "5 3", 
   "2 3",
@@ -41,6 +36,48 @@ String QUESTION_ANSWERS[] = {
   "6 4",
   "4 6"
 };
+
+String path7_1[] = {
+  "./img/trongpv/car.png", 
+  "./img/trongpv/motobike.png"
+};
+String path7_2[] = {
+  "./img/trongpv/ticket.png", 
+  "./img/trongpv/ticket_child.png"
+};
+String path7_3[] = {
+  "./img/trongpv/science_book.png", 
+  "./img/trongpv/adventure_book.png"
+};
+String path7_4[] = {
+  "./img/trongpv/tricycle.png", 
+  "./img/trongpv/bike.png"
+};
+String path7_56[] = {
+  "./img/trongpv/chicken.png", 
+  "./img/trongpv/rabbit.png"
+};
+String path7_7[] = {
+  "./img/trongpv/car.png", 
+  "./img/trongpv/motobike.png"
+};
+String path7_8[] = {
+  "./img/trongpv/spider.png", 
+  "./img/trongpv/dragonfly.png"
+};
+
+
+QuestionFigure QUESTION_FIGURES[] = {
+  new ImagesFigure(path7_1, 250, 250),
+  new ImagesFigure(path7_2, 250, 250),
+  new ImagesFigure(path7_3, 250, 250),
+  new ImagesFigure(path7_4, 250, 250),
+  new ImagesFigure(path7_56, 250, 250),
+  new ImagesFigure(path7_56, 250, 250),
+  new ImagesFigure(path7_7, 250, 250),
+  new ImagesFigure(path7_8, 250, 250)
+};
+
 PImage bg;
 PFont f;
   
@@ -48,10 +85,9 @@ void settings() {
   size(1024, 512);
 }
 QuizGame game;
-StarGraph graph;
+
 void setup() {
-  game = new QuizGame(NUM_QUESTIONS, QUESTION_TEXTS, QUESTION_IMAGES, QUESTION_IMAGES_WIDTH, QUESTION_IMAGES_HEIGHT, QUESTION_ANSWERS, QUESTION_DATA);
-  graph = new StarGraph();
+  game = new QuizGame(NUM_QUESTIONS, QUESTION_TEXTS, QUESTION_FIGURES, QUESTION_ANSWERS);
   
   bg = loadImageRelative("./img/bg1.jpg");
   f = createFont("Georgia", 26, true);
