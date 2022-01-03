@@ -13,7 +13,7 @@ public class DrawUtil {
   * @param blockWidth   width of a block  
   * @param x            x-coordinate of first block 
   * @param y            y-coordinate of first block 
-  * @param blockDist    distance between 2 consecutive block   
+  * @param blockDist    distance between 2 consecutives block   
   * @param txtSize      size of each character  
   * @param arr          list of charaters   
   */
@@ -48,8 +48,8 @@ public class DrawUtil {
   * @param blockWidth   width of a block  
   * @param x            x-coordinate of first block 
   * @param y            y-coordinate of first block 
-  * @param distX        distance between 2 consecutive block in a row  
-  * @param distY        distance between 2 consecutive block in a col  
+  * @param distX        distance between 2 consecutive blocks in a row  
+  * @param distY        distance between 2 consecutive blocks in a col  
   * @param txtSize      size of each character  
   * @param arr          list of charaters   
   */
@@ -63,6 +63,19 @@ public class DrawUtil {
     }
   }
 
+  /**
+  * Draw a pyramid 
+  *
+  * @param numRows      number of rows 
+  * @param blockWidth   witdh of a block 
+  * @param blockHeight  height of a block 
+  * @param distX        distance between 2 consecutive blocks in a row  
+  * @param distY        distance between 2 consecutive blocks in a column  
+  * @param x            x-coordinate of first block 
+  * @param y            y-coordinate of first block 
+  * @param txtSize      size of each character 
+  * @param arr          list of characters  
+  */
   void drawPyramid(float numRows, float blockWidth, float blockHeight, int distX, int distY, float x, float y, float txtSize, String[][] arr) {
     // drawSequence(int numBlocks, int blockHeight, int blockWidth, int x, int y, int blockDist, int txtSize, char[] arr) 
     for (int i = 0; i < numRows; ++i) {
@@ -71,51 +84,52 @@ public class DrawUtil {
       y += blockHeight + distY;
     }
   }
-  
-  void drawLine(float x0, float y0, float x1, float y1) {
-    strokeWeight(2);
-    line(x0, y0, x1, y1);
-  }
-  
-  void drawStarGraph(String[] v, float x0, float y0, float radius) {
-    translate(x0, y0);
-    drawCircleWithText(v[0], 0, 0, radius);
-    drawCircleWithText(v[1], 0, -3 * radius, radius);
-    drawCircleWithText(v[2], sqrt(9*radius*radius/2), sqrt(9*radius*radius/2), radius);
-    drawCircleWithText(v[3], -sqrt(9*radius*radius/2), sqrt(9*radius*radius/2), radius);
-    
-    drawLine(0, -radius, 0, -2*radius);
-    drawLine(
-      sqrt(radius*radius/2), 
-      sqrt(radius*radius/2), 
-      sqrt(radius*radius*2),
-      sqrt(radius*radius*2)
-    );
-    drawLine(
-      -sqrt(radius*radius/2), 
-      sqrt(radius*radius/2), 
-      -sqrt(radius*radius*2),
-      sqrt(radius*radius*2)
-    );
-    translate(-x0, -y0);
-  }
-  
-  void drawCircleWithText(String str, float x0, float y0, float r) {
-    // move the origin to the center of the canvas
-    translate(x0, y0);
-  
-    // Draw a a circle with radius r
-    noFill();
-    stroke(0);
-    ellipse(0, 0, r*2, r*2);   
-    textAlign(CENTER);
-    textSize(30);
-    fill(0);
-    text(str, 0, 0);
-    translate(-x0, -y0);
-    textSize(20);
-  }
-}
 
-public class Hehe {
+  /**
+  * Draw a circle with blocks inside 
+  * Example run: 
+  * --> size(600, 600);
+  * --> drawCircleNumber(600/2, 600/2, 200, 3, 30, 50, new String[] {"1", "2", "3"});
+  *
+  * @param xo         x-coordinate of circle's center   
+  * @param yo         y-coordinate of circle's center 
+  * @param ratio      ratio of circle 
+  * @param numBlocks  numBlocks 
+  * @param txtSize    size of each character  
+  * @param txtDist    distance between text and circle's center 
+  * @param arr        list of characters 
+  */
+  boolean drawCircleNumber(float xo, float yo, float ratio, int numBlocks, int txtSize, int txtDist, String[] arr) {    
+    if (360 % numBlocks != 0) {
+      return false;
+    }
+    
+    fill(255, 255, 255);
+    circle(xo, yo, ratio);
+    
+    PVector center = new PVector(xo, yo);
+    int subDegree = 360 / numBlocks;
+    for (int i = 270, cnt = 0; i > -90; i -= subDegree, cnt++) {
+      //println(i);
+      fill(255, 255, 255);
+      float x = center.x + cos(radians(i)) * (ratio / 2);
+      float y = center.y + sin(radians(i)) * (ratio / 2);
+      line(center.x, center.y, x, y);
+        
+      //line(center.x, center.y, txtX, txtY);
+    }
+      
+    fill(0, 0, 0);
+    for (int i = 270, cnt = 0; i > -90; i -= subDegree, cnt++) {
+      float txtX = center.x + cos(radians(i-subDegree/2)) * txtDist;
+      float txtY = center.y + sin(radians(i-subDegree/2)) * txtDist;
+      
+      textSize(txtSize);
+
+      textAlign(CENTER);
+      text(String.valueOf(arr[cnt]), txtX, txtY);
+    }
+    
+    return true;
+  }
 }
