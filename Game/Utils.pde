@@ -86,6 +86,9 @@ public class DrawUtil {
 
   /**
   * Draw a circle with blocks inside 
+  * Example run: 
+  * --> size(600, 600);
+  * --> drawCircleNumber(600/2, 600/2, 200, 3, 30, 50, new String[] {"1", "2", "3"});
   *
   * @param xo         x-coordinate of circle's center   
   * @param yo         y-coordinate of circle's center 
