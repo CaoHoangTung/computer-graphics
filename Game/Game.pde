@@ -1,39 +1,35 @@
+DrawUtil drawUtil = new DrawUtil();
+int PADDING = 10;
+int QUESTION_BOX_WIDTH;
+int QUESTION_BOX_HEIGHT = 100;
+int IMAGE_BOX_HEIGHT = 270;
+int ANSWER_BOX_HEIGHT = 100;
+int BOX_RADIUS = 20;
+int BOX_BACKGROUND_COLOR = #c6e2ff;
+int BOX_TEXT_COLOR = #666666;
+float BOX_OPACITY = 200;
+  
 public class QuizGame {
-  int PADDING = 10;
-  int QUESTION_BOX_WIDTH;
-  int QUESTION_BOX_HEIGHT = 100;
-  int IMAGE_BOX_HEIGHT = 270;
-  int ANSWER_BOX_HEIGHT = 100;
-  int BOX_RADIUS = 20;
-  int BOX_BACKGROUND_COLOR = #c6e2ff;
-  int BOX_TEXT_COLOR = #666666;
-  float BOX_OPACITY = 200;
+  
   
   int NUM_QUESTIONS;
   int ACTIVE_QUESTION;
   String[] QUESTION_TEXTS;
-  String[] QUESTION_IMAGES;
-  int[] QUESTION_IMAGES_WIDTH;
-  int[] QUESTION_IMAGES_HEIGHT;
+  QuestionFigure[] QUESTION_FIGURES;
   
   String[] QUESTION_ACTUAL_ANSWERS;
   String[][][] QUESTION_DATA;
   ArrayList<String> QUESTION_INPUT_ANSWERS;
   int finalScore;
     
-  QuizGame(int numQuestions, String[] questionTexts, String[] questionImages, 
-            int[] questionImagesWidth, int[] questionImagesHeight, 
-            String[] questionAnswers, String[][][] questionData) {
+  QuizGame(int numQuestions, String[] questionTexts, QuestionFigure[] questionFigures, String[] questionAnswers) {
     NUM_QUESTIONS = numQuestions;
     QUESTION_TEXTS = questionTexts;
-    QUESTION_IMAGES = questionImages;
-    QUESTION_IMAGES_WIDTH = questionImagesWidth;
-    QUESTION_IMAGES_HEIGHT = questionImagesHeight;
+    QUESTION_FIGURES = questionFigures;
     ACTIVE_QUESTION = 0;
     QUESTION_BOX_WIDTH = width - PADDING*2;
     QUESTION_ACTUAL_ANSWERS = questionAnswers;
     QUESTION_INPUT_ANSWERS = new ArrayList();
-    QUESTION_DATA = questionData;
     finalScore = 0;
   }
   
@@ -53,11 +49,9 @@ public class QuizGame {
       drawEndGame();
     } else {
       drawQuestionTextBox();
-  
-      drawQuestionImage();
       
-      drawQuestionData();
-      
+      drawQuestionContent();
+
       drawUserInput();
     }
   }
@@ -73,24 +67,14 @@ public class QuizGame {
       QUESTION_BOX_WIDTH-PADDING*2, QUESTION_BOX_HEIGHT-PADDING*2);
   }
   
-  
-  void drawQuestionImage() {
-    // create image box
-    int IMAGE_BOX_WIDTH = width - PADDING*2;
-    int IMAGE_WIDTH = QUESTION_IMAGES_WIDTH[ACTIVE_QUESTION-1];
-    int IMAGE_HEIGHT = QUESTION_IMAGES_HEIGHT[ACTIVE_QUESTION-1];
-  
-    fill(BOX_BACKGROUND_COLOR, BOX_OPACITY);
-    rect(PADDING, PADDING*2 + QUESTION_BOX_HEIGHT, IMAGE_BOX_WIDTH, IMAGE_BOX_HEIGHT, BOX_RADIUS);
-    
-    if (QUESTION_IMAGES.length < ACTIVE_QUESTION) {
-      return;
-    }
-    PImage img = loadImageRelative(QUESTION_IMAGES[ACTIVE_QUESTION-1]);
-  
-    int IMAGE_X = (width-IMAGE_WIDTH)/2;
-    int IMAGE_Y = PADDING*3 + QUESTION_BOX_HEIGHT;
-    image(img, IMAGE_X, IMAGE_Y, IMAGE_WIDTH, IMAGE_HEIGHT);
+  void drawQuestionContent() {
+      // create image box
+      int IMAGE_BOX_WIDTH = width - PADDING*2;
+      
+      fill(BOX_BACKGROUND_COLOR, BOX_OPACITY);
+      rect(PADDING, PADDING*2 + QUESTION_BOX_HEIGHT, IMAGE_BOX_WIDTH, IMAGE_BOX_HEIGHT, BOX_RADIUS);
+      
+      QUESTION_FIGURES[ACTIVE_QUESTION-1].draw();
   }
   
   void drawQuestionData() {
@@ -101,7 +85,7 @@ public class QuizGame {
     
     String[][] data = QUESTION_DATA[ACTIVE_QUESTION-1];
     for (int i = 0; i < 3; i++) {
-      graph.drawStarGraph(data[i], 180 + i * 300, 270, 30);
+      drawUtil.drawStarGraph(data[i], 180 + i * 300, 270, 30);
     }
   }
   
