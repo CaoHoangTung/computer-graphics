@@ -144,6 +144,31 @@ public class ImageFigure extends QuestionFigure {
 }
 
 /*
+  Multiple images figure
+*/
+public class ImagesFigure extends QuestionFigure {
+  String[] paths;
+  int imgWidth, imgHeight;
+  
+  public ImagesFigure(String[] paths, int imgWidth, int imgHeight) {
+    this.paths = paths;
+    this.imgWidth = imgWidth;
+    this.imgHeight = imgHeight; 
+  }
+  
+  public void draw() {
+    int leng = this.paths.length;
+    for (int i = 0; i < leng; i++) {
+      PImage img = loadImageRelative(this.paths[i]);
+  
+      int IMAGE_X = width/leng * i + (width/(leng*4));
+      int IMAGE_Y = PADDING*3 + QUESTION_BOX_HEIGHT;
+      image(img, IMAGE_X, IMAGE_Y, this.imgWidth, this.imgHeight);
+    }
+  }
+}
+
+/*
   Star graph figure
 */
 public class StarGraphFigure extends QuestionFigure {

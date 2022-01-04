@@ -9,6 +9,7 @@ PFont f;
 
 
 void setup() {
+  addQuestions(quiz123_130_questions);
   addQuestions(quiz115_122_questions);
   game = new QuizGame(allQuestions);
 

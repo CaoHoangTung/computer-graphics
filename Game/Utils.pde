@@ -84,7 +84,6 @@ public class DrawUtil {
       y += blockHeight + distY;
     }
   }
-
   /**
   * Draw a circle with blocks inside 
   * Example run: 
