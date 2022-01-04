@@ -13,6 +13,71 @@ public class EmptyFigure extends QuestionFigure {
 
 
 /*
+  Multi circle graph figure
+*/
+public class MultiFigure extends QuestionFigure {
+  QuestionFigure[] figures;
+  
+  public MultiFigure(QuestionFigure... figures) {
+    this.figures = figures;
+  }
+  
+  public void draw() {
+    for (QuestionFigure figure: figures) {
+      figure.draw();
+    }
+  }
+}
+
+/*
+  Circle graph figure
+*/
+public class CircleGraphFigure extends QuestionFigure {
+  float x0, y0, ratio;
+  int numBlocks, txtDist;
+  String[] arr;
+  
+  public CircleGraphFigure(float x0, float y0, float ratio, int numBlocks, int txtDist, String[] arr) {
+    this.x0 = x0;
+    this.y0 = y0;
+    this.ratio = ratio;
+    this.numBlocks = numBlocks;
+    this.txtDist = txtDist;
+    this.arr = arr;
+  }
+  
+  public void draw() {
+    if (360 % numBlocks != 0) {
+      return;
+    }
+    
+    fill(255, 255, 255);
+    circle(x0, y0, ratio);
+    
+    PVector center = new PVector(x0, y0);
+    int subDegree = 360 / numBlocks;
+    for (int i = 270, cnt = 0; i > -90; i -= subDegree, cnt++) {
+      //println(i);
+      fill(255, 255, 255);
+      float x = center.x + cos(radians(i)) * (ratio / 2);
+      float y = center.y + sin(radians(i)) * (ratio / 2);
+      line(center.x, center.y, x, y);
+        
+      //line(center.x, center.y, txtX, txtY);
+    }
+      
+    fill(0, 0, 0);
+    for (int i = 270, cnt = 0; i > -90; i -= subDegree, cnt++) {
+      float txtX = center.x + cos(radians(i-subDegree/2)) * txtDist;
+      float txtY = center.y + sin(radians(i-subDegree/2)) * txtDist;
+
+      textAlign(CENTER);
+      text(String.valueOf(arr[cnt]), txtX, txtY);
+    }
+  }
+}
+
+/*
   Table figure
 */
 public class TableFigure extends QuestionFigure {
@@ -33,25 +98,25 @@ public class TableFigure extends QuestionFigure {
     this.arr = arr;
   }
   
-  public void drawSequence(int numBlocks, float blockWidth, float blockHeight, float x, float y, float blockDist, float txtSize, String[] arr) {
+  public void drawSequence(int numBlocks, float blockWidth, float blockHeight, float x0, float y0, float blockDist, float txtSize, String[] arr) {
     for (int i = 0; i < numBlocks; ++i) {
       fill(255, 255, 255);
-      rect(x, y, blockWidth, blockHeight);     
+      rect(x0, y0, blockWidth, blockHeight);     
     
       fill(0, 0, 0);
-      textSize(txtSize);
 
       textAlign(CENTER);
-      text(String.valueOf(arr[i]), x, y + txtSize, blockWidth, blockHeight);
+      text(String.valueOf(arr[i]), x0, y0+ txtSize, blockWidth, blockHeight);
     
-      x += blockWidth + blockDist;
+      x0 += blockWidth + blockDist;
     }
   }
   
   public void draw() {
+    float y0 = y;
     for (int i = 0; i < numRows; ++i) {
-      drawSequence(numCols, blockWidth, blockHeight, x, y, distX, txtSize, arr[i]);
-      y += blockHeight + distY;
+      drawSequence(numCols, blockWidth, blockHeight, x, y0, distX, txtSize, arr[i]);
+      y0 += blockHeight + distY;
     }
   }
 }
