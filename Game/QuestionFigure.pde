@@ -190,7 +190,7 @@ public class StarGraphFigure extends QuestionFigure {
     translate(x0, y0);
   
     // Draw a a circle with radius r
-    noFill();
+    fill(255, 255, 255);
     stroke(0);
     ellipse(0, 0, r*2, r*2);   
     textAlign(CENTER);
@@ -204,7 +204,7 @@ public class StarGraphFigure extends QuestionFigure {
   public void draw() {
     for (int i = 0 ; i < this.numGraphs ; i++) {
       String[] v = this.graphs[i];
-      float x0 = 180 + i * 300;
+      float x0 = 210 + i * 300;
       float y0 = 270;
       float radius = 30;
       
