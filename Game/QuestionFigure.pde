@@ -18,7 +18,7 @@ public class EmptyFigure extends QuestionFigure {
 public class MultiFigure extends QuestionFigure {
   QuestionFigure[] figures;
   
-  public MultiFigure(QuestionFigure[] figures) {
+  public MultiFigure(QuestionFigure... figures) {
     this.figures = figures;
   }
   
