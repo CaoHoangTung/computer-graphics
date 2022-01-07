@@ -2,13 +2,13 @@ Question quiz131_136_questions[] = {
   new Question(
     "9a. Randy paid $16 in all for 11 two-dollar and one-dollar stamps.How many two-dollar stamps did he buy ?",
     "5",
-    new ImageFigure("./img/ore/dollar.jpg", 250, 250)
+    new ImageFigure("./img/ore/dollar.png", 250, 250)
   ),
 
   new Question(
     "9b. Randy paid $16 in all for 11 two-dollar and one-dollar stamps.How many one-dollar stamps did he buy ?",
     "6",
-    new ImageFigure("./img/ore/dollar.jpg", 250, 250)
+    new ImageFigure("./img/ore/dollar.png", 250, 250)
   ),
 
   new Question(
