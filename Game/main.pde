@@ -1,3 +1,6 @@
+import processing.sound.*;
+SoundFile file;
+
 void settings() {
   size(1024, 512);
 }
@@ -6,7 +9,14 @@ QuizGame game;
 PImage bg;
 PFont f;
 
-
+void playSound(String path, boolean loop) {
+  file = new SoundFile(this, path);
+  if (loop) {
+    file.loop();
+  } else {
+    file.play();
+  }
+}
 
 void setup() {
   addQuestions(quiz115_122_questions);
@@ -18,6 +28,7 @@ void setup() {
 
   bg = loadImageRelative("./img/bg1.jpg");
   f = createFont("Georgia", 26, true);
+  playSound("timer.wav", true);
 }
 
 void draw() {
