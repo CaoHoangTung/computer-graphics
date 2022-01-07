@@ -10,10 +10,10 @@ PFont f;
 
 void setup() {
   addQuestions(quiz115_122_questions);
-  // addQuestions(quiz123_130_questions);
-  // addQuestions(quiz131_136_questions);
-  // addQuestions(quiz137_142_questions);
-  // addQuestions(quiz143_148_questions);
+  addQuestions(quiz123_130_questions);
+  addQuestions(quiz131_136_questions);
+  addQuestions(quiz137_142_questions);
+  addQuestions(quiz143_148_questions);
   game = new QuizGame(allQuestions);
 
   bg = loadImageRelative("./img/bg1.jpg");

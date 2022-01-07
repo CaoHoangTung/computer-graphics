@@ -3,8 +3,8 @@ String path77_1[] = {
   "./img/ore/rabbit.png"
 };
 String path77_2[] = {
-  "./img/ore/spider.png", 
-  "./img/ore/butterfly.png"
+  "./img/trongpv/spider.png", 
+  "./img/trongpv/dragonfly.png"
 };
 
 Question quiz115_122_questions[] = { 
