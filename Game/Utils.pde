@@ -2,6 +2,38 @@ PImage loadImageRelative(String path) {
   return loadImage(sketchPath(path));
 }
 
+public class Timer {
+  int startTime, limitTime;
+  
+  public Timer(int startTime, int limitTime) {
+    this.startTime = startTime;
+    this.limitTime = limitTime;
+  }
+  
+  public int getElapsedTime() {
+    return millis() - this.startTime;
+  }
+  
+  public String getTimeLeft() {
+    int timeLeft = this.limitTime - this.getElapsedTime();
+    int minute = timeLeft / 1000 / 60;
+    int second = (timeLeft / 1000 ) % 60;
+    
+    String minuteString = String.format("%s", minute);
+    if (minuteString.length() == 1)
+      minuteString = "0" + minuteString;
+    String secondString = String.format("%s", second);
+    if (secondString.length() == 1)
+      secondString = "0" + secondString;
+    return String.format("%s:%s", minuteString, secondString);
+  }
+  
+  public boolean ended() {
+    return this.getElapsedTime() >= this.limitTime;
+  }
+  
+}
+
 public class DrawUtil {
   /** 
   * Draw a sequence 

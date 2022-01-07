@@ -8,14 +8,19 @@ int BOX_RADIUS = 20;
 int BOX_BACKGROUND_COLOR = #c6e2ff;
 int BOX_TEXT_COLOR = #666666;
 float BOX_OPACITY = 200;
-    
+int TIME_LIMIT = 60000;
+
 public class QuizGame {
+  boolean hasAnnouncedBegin = false;
+  boolean hasAnnouncedEnd = false;
   
   int activeQuestionId;
   private int finalScore;
   
   ArrayList<Question> questions;
   ArrayList<String> userAnswers;
+  
+  Timer timer;
     
   QuizGame(ArrayList<Question> questions) {
     this.questions = questions;
@@ -35,13 +40,29 @@ public class QuizGame {
       drawBeginGame();
     } else if (activeQuestionId > questions.size()) {
       // draw endgame result screen
+      if (!hasAnnouncedEnd) {
+        hasAnnouncedEnd = true;
+        startSound.pause();
+        endSound.play();  
+      }
       drawEndGame();
     } else {
-      drawQuestionTextBox();
+      if (!hasAnnouncedBegin) {
+        hasAnnouncedBegin = true;
+        startSound.loop();
+        this.timer = new Timer(millis(), TIME_LIMIT);
+      }
       
-      drawQuestionContent();
-
-      drawUserInput();
+      if (this.timer.ended()) {
+        submit();
+      } else {
+        drawQuestionTextBox();
+      
+        drawQuestionContent();
+  
+        drawUserInput();
+      }
+      
     }
   }
   
@@ -53,6 +74,8 @@ public class QuizGame {
     fill(BOX_TEXT_COLOR);
     textAlign(CENTER, CENTER);
     text(str, PADDING*2, PADDING*2,
+      QUESTION_BOX_WIDTH-PADDING*2, QUESTION_BOX_HEIGHT-PADDING*2);
+    text(timer.getTimeLeft(), PADDING*48, PADDING*5,
       QUESTION_BOX_WIDTH-PADDING*2, QUESTION_BOX_HEIGHT-PADDING*2);
   }
   
@@ -97,7 +120,7 @@ public class QuizGame {
   }
   
   void drawBeginGame() {
-        fill(BOX_BACKGROUND_COLOR, BOX_OPACITY);
+    fill(BOX_BACKGROUND_COLOR, BOX_OPACITY);
     rect(PADDING, PADDING, width-PADDING*2, height-PADDING*2);
     
     fill(BOX_TEXT_COLOR);
@@ -164,6 +187,8 @@ public class QuizGame {
   
   void resetGame() {
     activeQuestionId = 0;
+    hasAnnouncedBegin = false;
+    hasAnnouncedEnd = false;
   }
   
   void submit() {
@@ -192,6 +217,9 @@ public class QuizGame {
   }
   
   void toggleQuestion(int move) {
+    if (activeQuestionId > questions.size())
+      return;
+      
     int nextQuestion = activeQuestionId + move;
     if (nextQuestion <= 0 || nextQuestion > questions.size())
       return;
